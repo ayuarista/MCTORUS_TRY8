@@ -1,0 +1,22 @@
+﻿  MCTORUS_TRY8.cpp
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(57): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(82): warning C4326: return type of 'main' should be 'int' instead of 'void'
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(87): warning C4244: 'initializing': conversion from 'double' to 'GLsizei', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(88): warning C4244: 'initializing': conversion from 'double' to 'GLsizei', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(144): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(186): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(193): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(221): warning C4305: '*=': truncation from 'double' to 'GLfloat'
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(228): warning C4305: '/=': truncation from 'double' to 'GLfloat'
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(264): warning C4305: '+=': truncation from 'double' to 'GLfloat'
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(304): warning C4244: 'return': conversion from 'GLdouble' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(314): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(315): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(316): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(336): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(359): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(376): warning C4244: 'return': conversion from 'GLdouble' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(384): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(385): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\new folder\mctorus_try8\mctorus_try8\mctorus_try8.cpp(386): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+  MCTORUS_TRY8.vcxproj -> D:\A BISMILLAH SKRIPSI\program\New folder\MCTORUS_TRY8\Debug\MCTORUS_TRY8.exe
