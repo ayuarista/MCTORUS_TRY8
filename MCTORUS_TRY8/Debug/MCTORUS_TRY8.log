@@ -9,14 +9,14 @@ d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(19
 d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(222): warning C4305: '*=': truncation from 'double' to 'GLfloat'
 d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(229): warning C4305: '/=': truncation from 'double' to 'GLfloat'
 d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(265): warning C4305: '+=': truncation from 'double' to 'GLfloat'
-d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(305): warning C4244: 'return': conversion from 'GLdouble' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(304): warning C4244: 'return': conversion from 'GLdouble' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(314): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
 d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(315): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
 d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(316): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(317): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(337): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(360): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
-d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(377): warning C4244: 'return': conversion from 'GLdouble' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(336): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(359): warning C4244: '=': conversion from 'double' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(376): warning C4244: 'return': conversion from 'GLdouble' to 'GLfloat', possible loss of data
+d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(384): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
 d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(385): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
 d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(386): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-d:\a bismillah skripsi\program\c++\mctorus_try8\mctorus_try8\mctorus_try8.cpp(387): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
   MCTORUS_TRY8.vcxproj -> D:\A BISMILLAH SKRIPSI\program\c++\MCTORUS_TRY8\Debug\MCTORUS_TRY8.exe
