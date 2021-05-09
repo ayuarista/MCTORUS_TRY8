@@ -53,13 +53,13 @@ static const GLfloat afSpecularBlue[] = { 0.25, 0.25, 1.00, 1.00 };
 
 
 GLenum    ePolygonMode = GL_FILL;
-GLint     iDataSetSize = 16;
+GLint     iDataSetSize = 30;
 GLfloat   fStepSize = 1.0 / iDataSetSize;
 GLfloat   fTargetValue = 48.0;
 GLfloat   fTime = 0.0;
 GLvector  sSourcePoint[3];
-GLboolean bSpin = true;
-GLboolean bMove = true;
+GLboolean bSpin = false;
+GLboolean bMove = false;
 GLboolean bLight = true;
 
 
@@ -129,12 +129,12 @@ GLvoid vPrintHelp()
 {
 	printf("Marching Cube Algoritma pada Torus Objek \n\n\n");
 
-	printf("+/-  increase/decrease sample density\n");
-	printf("PageUp/PageDown  increase/decrease surface value\n");
+	printf("+/-  Menambah/Mengurangi kepadatan grid\n");
+	printf("PageUp/PageDown  Menambah/Mengurangi nilai isovalue\n");
 	printf("w  wireframe on/off\n");
 	printf("l  toggle lighting / color-by-normal\n");
-	printf("Home  spin scene on/off\n");
-	printf("End  source point animation on/off\n");
+	printf("Home  Rotasi scene on/off\n");
+	printf("End  Perpindahan source point on/off\n");
 
 }
 
@@ -256,7 +256,7 @@ void vDrawScene()
 
 	if (bSpin)
 	{
-		fPitch += 4.0;
+		fPitch += 3.0;
 		fYaw += 2.5;
 	}
 	if (bMove)
@@ -273,7 +273,7 @@ void vDrawScene()
 
 	glPushAttrib(GL_LIGHTING_BIT);
 	glDisable(GL_LIGHTING);
-	glColor3f(1.0, 1.0, 1.0);
+	glColor3f(0.0, 1.0, 1.0);
 	glutWireCube(1.0);
 	glPopAttrib();
 
