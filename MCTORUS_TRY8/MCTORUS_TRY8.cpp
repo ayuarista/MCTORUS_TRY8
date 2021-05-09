@@ -1,3 +1,4 @@
+//based on http://paulbourke.net/geometry/polygonise/marchingsource.cpp
 #include <iostream>
 
 #include <Windows.h>
