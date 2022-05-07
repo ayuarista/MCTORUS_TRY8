@@ -16,6 +16,32 @@ struct GLvector
 	GLfloat fZ;
 };
 
+GLenum    ePolygonMode = GL_FILL;
+GLint     Grid = 30;
+GLfloat   Scale = 1.0 / Grid;
+GLfloat   Isovalue = 48.0;
+GLfloat   fTime = 0.0;
+GLvector  sSourcePoint[3];
+GLboolean bSpin = true;
+GLboolean bMove = false;
+GLboolean bLight = true;
+
+GLsizei Window_Width = 800.0;
+GLsizei Window_Height = 600.0;
+
+void vIdle();
+void vDrawScene();
+void vResize(GLsizei, GLsizei);
+void vKeyboard(unsigned char cKey, int iX, int iY);
+void vSpecial(int iKey, int iX, int iY);
+
+GLvoid vPrintHelp();
+GLvoid vSetTime(GLfloat fTime);
+GLfloat Torus(GLfloat fX, GLfloat fY, GLfloat fZ);
+
+GLvoid vMarchingCubes();
+GLvoid vMarchCube(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale);
+
 //vertexCube, list posisi titik kubus pada MC algo
 static const GLfloat vertexCube[8][3] =
 {
@@ -52,45 +78,17 @@ static const GLfloat afSpecularRed[] = { 1.00, 0.25, 0.25, 1.00 };
 static const GLfloat afSpecularGreen[] = { 0.25, 1.00, 0.25, 1.00 };
 static const GLfloat afSpecularBlue[] = { 0.25, 0.25, 1.00, 1.00 };
 
-
-GLenum    ePolygonMode = GL_FILL;
-GLint     iDataSetSize = 30;
-GLfloat   fStepSize = 1.0 / iDataSetSize;
-GLfloat   fTargetValue = 48.0;
-GLfloat   fTime = 0.0;
-GLvector  sSourcePoint[3];
-GLboolean bSpin = false;
-GLboolean bMove = false;
-GLboolean bLight = true;
-
-
-void vIdle();
-void vDrawScene();
-void vResize(GLsizei, GLsizei);
-void vKeyboard(unsigned char cKey, int iX, int iY);
-void vSpecial(int iKey, int iX, int iY);
-
-GLvoid vPrintHelp();
-GLvoid vSetTime(GLfloat fTime);
-GLfloat fSample1(GLfloat fX, GLfloat fY, GLfloat fZ);
-GLfloat(*fSample)(GLfloat fX, GLfloat fY, GLfloat fZ) = fSample1;
-
-GLvoid vMarchingCubes();
-GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale);
-GLvoid(*vMarchCube)(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale) = vMarchCube1;
-
+//main
 void main(int argc, char **argv)
 {
 	GLfloat afPropertiesAmbient[] = { 0.50, 0.50, 0.50, 1.00 };
 	GLfloat afPropertiesDiffuse[] = { 0.75, 0.75, 0.75, 1.00 };
 	GLfloat afPropertiesSpecular[] = { 1.00, 1.00, 1.00, 1.00 };
 
-	GLsizei iWidth = 800.0;
-	GLsizei iHeight = 600.0;
 
 	glutInit(&argc, argv);
 	glutInitWindowPosition(0, 0);
-	glutInitWindowSize(iWidth, iHeight);
+	glutInitWindowSize(Window_Width, Window_Height);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
 	glutCreateWindow("Marching Cubes");
 	glutDisplayFunc(vDrawScene);
@@ -120,7 +118,7 @@ void main(int argc, char **argv)
 	glMaterialfv(GL_FRONT, GL_SPECULAR, afSpecularWhite);
 	glMaterialf(GL_FRONT, GL_SHININESS, 25.0);
 
-	vResize(iWidth, iHeight);
+	vResize(Window_Width, Window_Height);
 
 	vPrintHelp();
 	glutMainLoop();
@@ -128,14 +126,34 @@ void main(int argc, char **argv)
 
 GLvoid vPrintHelp()
 {
-	printf("Marching Cube Algoritma pada Torus Objek \n\n\n");
+	printf("\n		Marching Cube Algoritma pada Torus Objek \n");
+	printf("\n		Ayu Arista Nuraisah - Matematika 2015 \n");
+	printf("\n                 UNIVERSITAS AIRLANGGA 2022 \n\n");
 
-	printf("+/-  Menambah/Mengurangi kepadatan grid\n");
-	printf("PageUp/PageDown  Menambah/Mengurangi nilai isovalue\n");
-	printf("w  wireframe on/off\n");
-	printf("l  toggle lighting / color-by-normal\n");
-	printf("Home  Rotasi scene on/off\n");
-	printf("End  Perpindahan source point on/off\n");
+	printf("---------------------------------------------------------------------\n\n");
+
+	printf("	+/-			Menambah/Mengurangi kepadatan grid\n");
+	printf("	PageUp/PageDown		Menambah/Mengurangi nilai isovalue\n");
+	printf("	w			Wireframe on/off\n");
+	printf("	l			Toggle lighting / color-by-normal\n");
+	printf("	Home			Rotasi scene on/off\n");
+	printf("	End			Perpindahan source point on/off\n\n");
+
+	printf("---------------------------------------------------------------------\n\n");
+	
+	std::cout << "	Windows Width = "; std::cout << Window_Width;  std::cout << "\n";
+	std::cout << "	Windows Height = "; std::cout << Window_Height; std::cout << "\n";
+	std::cout << "	c = "; std::cout << Window_Width;  std::cout << "\n";
+	std::cout << "	a = "; std::cout << Window_Width;  std::cout << "\n";
+	std::cout << "	x0 = "; std::cout << Window_Width;  std::cout << "\n";
+	std::cout << "	y0 = "; std::cout << Window_Width;  std::cout << "\n";
+	std::cout << "	z0 = "; std::cout << Window_Width;  std::cout << "\n";
+	std::cout << "	Grid = "; std::cout << Grid;  std::cout << "\n";
+	std::cout << "	Scale = "; std::cout << Scale;  std::cout << "\n";
+	std::cout << "	Isovalue = "; std::cout << Isovalue;  std::cout << "\n";
+	std::cout << "	edgetable = "; std::cout << Window_Width;  std::cout << "\n";
+	std::cout << "	tritriangle = "; std::cout << Window_Width;  std::cout << "\n";
+
 
 }
 
@@ -183,15 +201,15 @@ void vKeyboard(unsigned char cKey, int iX, int iY)
 	case '+':
 	case '=':
 	{
-		++iDataSetSize;
-		fStepSize = 1.0 / iDataSetSize;
+		++Grid;
+		Scale = 1.0 / Grid;
 	} break;
 	case '-':
 	{
-		if (iDataSetSize > 1)
+		if (Grid > 1)
 		{
-			--iDataSetSize;
-			fStepSize = 1.0 / iDataSetSize;
+			--Grid;
+			Scale = 1.0 / Grid;
 		}
 	} break;
 	case 'l':
@@ -217,16 +235,16 @@ void vSpecial(int iKey, int iX, int iY)
 	{
 	case GLUT_KEY_PAGE_UP:
 	{
-		if (fTargetValue < 1000.0)
+		if (Isovalue < 1000.0)
 		{
-			fTargetValue *= 1.1;
+			Isovalue *= 1.1;
 		}
 	} break;
 	case GLUT_KEY_PAGE_DOWN:
 	{
-		if (fTargetValue > 1.0)
+		if (Isovalue > 1.0)
 		{
-			fTargetValue /= 1.1;
+			Isovalue /= 1.1;
 		}
 	} break;
 	case GLUT_KEY_HOME:
@@ -363,7 +381,7 @@ GLvoid vSetTime(GLfloat fNewTime)
 }
 
 //Bidang Skalar Objek Torus
-GLfloat fSample1(GLfloat fX, GLfloat fY, GLfloat fZ)
+GLfloat Torus(GLfloat fX, GLfloat fY, GLfloat fZ)
 {
 	GLdouble fResult = 0.0;
 	GLdouble fDx, fDy, fDz;
@@ -381,14 +399,26 @@ GLfloat fSample1(GLfloat fX, GLfloat fY, GLfloat fZ)
 //This gradient can be used as a very accurate vertx normal for lighting calculations
 GLvoid vGetNormal(GLvector &rfNormal, GLfloat fX, GLfloat fY, GLfloat fZ)
 {
-	rfNormal.fX = fSample(fX - 0.01, fY, fZ) - fSample(fX + 0.01, fY, fZ);
-	rfNormal.fY = fSample(fX, fY - 0.01, fZ) - fSample(fX, fY + 0.01, fZ);
-	rfNormal.fZ = fSample(fX, fY, fZ - 0.01) - fSample(fX, fY, fZ + 0.01);
+	rfNormal.fX = Torus(fX - 0.01, fY, fZ) - Torus(fX + 0.01, fY, fZ);
+	rfNormal.fY = Torus(fX, fY - 0.01, fZ) - Torus(fX, fY + 0.01, fZ);
+	rfNormal.fZ = Torus(fX, fY, fZ - 0.01) - Torus(fX, fY, fZ + 0.01);
 	vNormalizeVector(rfNormal, rfNormal);
 }
 
 //Marching Cube Algoritma
-GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
+
+GLvoid vMarchingCubes()
+{
+	GLint iX, iY, iZ;
+	for (iX = 0; iX < Grid; iX++)
+		for (iY = 0; iY < Grid; iY++)
+			for (iZ = 0; iZ < Grid; iZ++)
+			{
+				vMarchCube(iX*Scale, iY*Scale, iZ*Scale, Scale);
+			}
+}
+
+GLvoid vMarchCube(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
 {
 	extern GLint edgeTable[256];
 	extern GLint triTriangle[256][16];
@@ -403,7 +433,7 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
 	//CubeValue
 	for (iVertex = 0; iVertex < 8; iVertex++)
 	{
-		afCubeValue[iVertex] = fSample(fX + vertexCube[iVertex][0] * fScale,
+		afCubeValue[iVertex] = Torus(fX + vertexCube[iVertex][0] * fScale,
 			fY + vertexCube[iVertex][1] * fScale,
 			fZ + vertexCube[iVertex][2] * fScale);
 
@@ -414,7 +444,7 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
 
 	for (iVertexTest = 0; iVertexTest < 8; iVertexTest++)
 	{
-		if (afCubeValue[iVertexTest] <= fTargetValue)
+		if (afCubeValue[iVertexTest] <= Isovalue)
 			iFlagIndex |= 1 << iVertexTest;
 	}
 
@@ -434,7 +464,7 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
 		if (iEdgeFlags & (1 << iEdge))
 		{
 			fOffset = fGetOffset(afCubeValue[edgeConnection[iEdge][0]],
-				afCubeValue[edgeConnection[iEdge][1]], fTargetValue);
+				afCubeValue[edgeConnection[iEdge][1]], Isovalue);
 
 			asEdgeVertex[iEdge].fX = fX + (vertexCube[edgeConnection[iEdge][0]][0] + fOffset * edgeDirection[iEdge][0]) * fScale;
 			asEdgeVertex[iEdge].fY = fY + (vertexCube[edgeConnection[iEdge][0]][1] + fOffset * edgeDirection[iEdge][1]) * fScale;
@@ -463,18 +493,6 @@ GLvoid vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
 
 		}
 	}
-}
-
-//Iterasi untuk semua dataset, memanggil marchcube untuk setiap kubus
-GLvoid vMarchingCubes()
-{
-	GLint iX, iY, iZ;
-	for (iX = 0; iX < iDataSetSize; iX++)
-		for (iY = 0; iY < iDataSetSize; iY++)
-			for (iZ = 0; iZ < iDataSetSize; iZ++)
-			{
-				vMarchCube(iX*fStepSize, iY*fStepSize, iZ*fStepSize, fStepSize);
-			}
 }
 
 
