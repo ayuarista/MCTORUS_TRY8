@@ -16,15 +16,15 @@ struct GLvector
 	GLfloat fZ;
 };
 
-GLenum    ePolygonMode = GL_FILL;
+GLenum    PolygonMode = GL_FILL;
 GLint     Grid = 30;
 GLfloat   Scale = 1.0 / Grid;
 GLfloat   Isovalue = 48.0;
-GLfloat   fTime = 0.0;
-GLvector  sSourcePoint[3];
-GLboolean bSpin = true;
-GLboolean bMove = false;
-GLboolean bLight = true;
+GLfloat   Time = 0.0;
+GLvector  titik_awal[3];
+GLboolean Spin = true; 
+GLboolean Move = false; 
+GLboolean Light = true;
 
 GLsizei Window_Width = 800.0;
 GLsizei Window_Height = 600.0;
@@ -36,11 +36,11 @@ void vKeyboard(unsigned char cKey, int iX, int iY);
 void vSpecial(int iKey, int iX, int iY);
 
 GLvoid vPrintHelp();
-GLvoid vSetTime(GLfloat fTime);
+GLvoid vSetTime(GLfloat Time);
 GLfloat Torus(GLfloat fX, GLfloat fY, GLfloat fZ);
 
-GLvoid vMarchingCubes();
-GLvoid vMarchCube(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale);
+GLvoid MarchingCubes();
+GLvoid MarchCube(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat Scale);
 
 //vertexCube, list posisi titik kubus pada MC algo
 static const GLfloat vertexCube[8][3] =
@@ -102,7 +102,7 @@ void main(int argc, char **argv)
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
-	glPolygonMode(GL_FRONT_AND_BACK, ePolygonMode);
+	glPolygonMode(GL_FRONT_AND_BACK, PolygonMode);
 
 	glLightfv(GL_LIGHT0, GL_AMBIENT, afPropertiesAmbient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, afPropertiesDiffuse);
@@ -188,15 +188,15 @@ void vKeyboard(unsigned char cKey, int iX, int iY)
 	{
 	case 'w':
 	{
-		if (ePolygonMode == GL_LINE)
+		if (PolygonMode == GL_LINE)
 		{
-			ePolygonMode = GL_FILL;
+			PolygonMode = GL_FILL;
 		}
 		else
 		{
-			ePolygonMode = GL_LINE;
+			PolygonMode = GL_LINE;
 		}
-		glPolygonMode(GL_FRONT_AND_BACK, ePolygonMode);
+		glPolygonMode(GL_FRONT_AND_BACK, PolygonMode);
 	} break;
 	case '+':
 	case '=':
@@ -214,7 +214,7 @@ void vKeyboard(unsigned char cKey, int iX, int iY)
 	} break;
 	case 'l':
 	{
-		if (bLight)
+		if (Light)
 		{
 			glDisable(GL_LIGHTING);
 		}
@@ -223,7 +223,7 @@ void vKeyboard(unsigned char cKey, int iX, int iY)
 			glEnable(GL_LIGHTING);
 		}
 
-		bLight = !bLight;
+		Light = !Light;
 	};
 	}
 }
@@ -249,11 +249,11 @@ void vSpecial(int iKey, int iX, int iY)
 	} break;
 	case GLUT_KEY_HOME:
 	{
-		bSpin = !bSpin;
+		Spin = !Spin;
 	} break;
 	case GLUT_KEY_END:
 	{
-		bMove = !bMove;
+		Move = !Move;
 	} break;
 	}
 }
@@ -267,23 +267,23 @@ void vDrawScene()
 {
 	static GLfloat fPitch = 0.0;
 	static GLfloat fYaw = 0.0;
-	static GLfloat fTime = 0.0;
+	static GLfloat Time = 0.0;
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glPushMatrix();
 
-	if (bSpin)
+	if (Spin)
 	{
-		fPitch += 3.0;
-		fYaw += 2.5;
+		fPitch += 2.5; //x -axis
+		fYaw += 2.5; //y-axis
 	}
-	if (bMove)
+	if (Move)
 	{
-		fTime += 0.025;
+		Time += 0.025;
 	}
 
-	vSetTime(fTime);
+	vSetTime(Time);
 
 	glTranslatef(0.0, 0.0, -1.0);
 	glRotatef(-fPitch, 1.0, 0.0, 0.0);
@@ -300,7 +300,7 @@ void vDrawScene()
 	glPushMatrix();
 	glTranslatef(-0.5, -0.5, -0.5);
 	glBegin(GL_TRIANGLES);
-	vMarchingCubes();
+	MarchingCubes();
 	glEnd();
 	glPopMatrix();
 
@@ -337,7 +337,7 @@ GLvoid vGetColor(GLvector &rfColor, GLvector &rfPosition, GLvector &rfNormal)
 GLvoid vNormalizeVector(GLvector &rfVectorResult, GLvector &rfVectorSource)
 {
 	GLfloat fOldLength;
-	GLfloat fScale;
+	GLfloat Scale;
 
 	fOldLength = sqrtf((rfVectorSource.fX * rfVectorSource.fX) +
 		(rfVectorSource.fY * rfVectorSource.fY) +
@@ -351,16 +351,16 @@ GLvoid vNormalizeVector(GLvector &rfVectorResult, GLvector &rfVectorSource)
 	}
 	else
 	{
-		fScale = 1.0 / fOldLength;
-		rfVectorResult.fX = rfVectorSource.fX*fScale;
-		rfVectorResult.fY = rfVectorSource.fY*fScale;
-		rfVectorResult.fZ = rfVectorSource.fZ*fScale;
+		Scale = 1.0 / fOldLength;
+		rfVectorResult.fX = rfVectorSource.fX*Scale;
+		rfVectorResult.fY = rfVectorSource.fY*Scale;
+		rfVectorResult.fZ = rfVectorSource.fZ*Scale;
 	}
 }
 
 
 //Generate a sample data set.  fSample1(), fSample2() and fSample3() define three scalar fields whose
-// values vary by the X,Y and Z coordinates and by the fTime value set by vSetTime()
+// values vary by the X,Y and Z coordinates and by the Time value set by vSetTime()
 GLvoid vSetTime(GLfloat fNewTime)
 {
 	GLfloat fOffset;
@@ -368,16 +368,16 @@ GLvoid vSetTime(GLfloat fNewTime)
 
 	for (iSourceNum = 0; iSourceNum < 3; iSourceNum++)
 	{
-		sSourcePoint[iSourceNum].fX = 0.5;
-		sSourcePoint[iSourceNum].fY = 0.5;
-		sSourcePoint[iSourceNum].fZ = 0.5;
+		titik_awal[iSourceNum].fX = 0.5;
+		titik_awal[iSourceNum].fY = 0.5;
+		titik_awal[iSourceNum].fZ = 0.5;
 	}
 
-	fTime = fNewTime;
-	fOffset = 1.0 + sinf(fTime);
-	sSourcePoint[0].fX *= fOffset;
-	sSourcePoint[1].fY *= fOffset;
-	sSourcePoint[2].fZ *= fOffset;
+	Time = fNewTime;
+	fOffset = 1.0 + sinf(Time);
+	titik_awal[0].fX *= fOffset;
+	titik_awal[1].fY *= fOffset;
+	titik_awal[2].fZ *= fOffset;
 }
 
 //Bidang Skalar Objek Torus
@@ -386,9 +386,9 @@ GLfloat Torus(GLfloat fX, GLfloat fY, GLfloat fZ)
 	GLdouble fResult = 0.0;
 	GLdouble fDx, fDy, fDz;
 
-	fDx = fX - sSourcePoint[0].fX;
-	fDy = fY - sSourcePoint[1].fY;
-	fDz = fZ - sSourcePoint[2].fZ;
+	fDx = fX - titik_awal[0].fX;
+	fDy = fY - titik_awal[1].fY;
+	fDz = fZ - titik_awal[2].fZ;
 	fResult += 0.5 / (((0.25 - sqrt(fDx*fDx + fDy * fDy))*(0.25 - sqrt(fDx*fDx + fDy * fDy))) + (fDz*fDz));
 
 	return fResult;
@@ -407,18 +407,18 @@ GLvoid vGetNormal(GLvector &rfNormal, GLfloat fX, GLfloat fY, GLfloat fZ)
 
 //Marching Cube Algoritma
 
-GLvoid vMarchingCubes()
+GLvoid MarchingCubes()
 {
 	GLint iX, iY, iZ;
 	for (iX = 0; iX < Grid; iX++)
 		for (iY = 0; iY < Grid; iY++)
 			for (iZ = 0; iZ < Grid; iZ++)
 			{
-				vMarchCube(iX*Scale, iY*Scale, iZ*Scale, Scale);
+				MarchCube(iX*Scale, iY*Scale, iZ*Scale, Scale);
 			}
 }
 
-GLvoid vMarchCube(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
+GLvoid MarchCube(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat Scale)
 {
 	extern GLint edgeTable[256];
 	extern GLint triTriangle[256][16];
@@ -433,9 +433,9 @@ GLvoid vMarchCube(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
 	//CubeValue
 	for (iVertex = 0; iVertex < 8; iVertex++)
 	{
-		afCubeValue[iVertex] = Torus(fX + vertexCube[iVertex][0] * fScale,
-			fY + vertexCube[iVertex][1] * fScale,
-			fZ + vertexCube[iVertex][2] * fScale);
+		afCubeValue[iVertex] = Torus(fX + vertexCube[iVertex][0] * Scale,
+			fY + vertexCube[iVertex][1] * Scale,
+			fZ + vertexCube[iVertex][2] * Scale);
 
 	}
 
@@ -466,9 +466,9 @@ GLvoid vMarchCube(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fScale)
 			fOffset = fGetOffset(afCubeValue[edgeConnection[iEdge][0]],
 				afCubeValue[edgeConnection[iEdge][1]], Isovalue);
 
-			asEdgeVertex[iEdge].fX = fX + (vertexCube[edgeConnection[iEdge][0]][0] + fOffset * edgeDirection[iEdge][0]) * fScale;
-			asEdgeVertex[iEdge].fY = fY + (vertexCube[edgeConnection[iEdge][0]][1] + fOffset * edgeDirection[iEdge][1]) * fScale;
-			asEdgeVertex[iEdge].fZ = fZ + (vertexCube[edgeConnection[iEdge][0]][2] + fOffset * edgeDirection[iEdge][2]) * fScale;
+			asEdgeVertex[iEdge].fX = fX + (vertexCube[edgeConnection[iEdge][0]][0] + fOffset * edgeDirection[iEdge][0]) * Scale;
+			asEdgeVertex[iEdge].fY = fY + (vertexCube[edgeConnection[iEdge][0]][1] + fOffset * edgeDirection[iEdge][1]) * Scale;
+			asEdgeVertex[iEdge].fZ = fZ + (vertexCube[edgeConnection[iEdge][0]][2] + fOffset * edgeDirection[iEdge][2]) * Scale;
 
 			vGetNormal(asEdgeNorm[iEdge], asEdgeVertex[iEdge].fX, asEdgeVertex[iEdge].fY, asEdgeVertex[iEdge].fZ);
 		}
